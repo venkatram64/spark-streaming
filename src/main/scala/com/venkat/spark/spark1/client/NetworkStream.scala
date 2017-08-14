@@ -4,6 +4,7 @@ import org.apache.spark.SparkConf
 import org.apache.spark.storage.StorageLevel
 import org.apache.spark.streaming.{Seconds, StreamingContext}
 
+
 /**
   * Created by Srijan on 16-07-2017.
   */
