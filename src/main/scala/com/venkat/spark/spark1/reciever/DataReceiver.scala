@@ -26,7 +26,7 @@ class DataReceiver extends Receiver[Person](StorageLevel.MEMORY_AND_DISK_SER_2){
 
   private def recievePerson : Unit = {
     val names = new Names();
-    val namesData = names.readFile("Names.txt")
+    val namesData = names.readFile("NY.TXT")
 
     while(!isStopped() && namesData != null){
       namesData match{
