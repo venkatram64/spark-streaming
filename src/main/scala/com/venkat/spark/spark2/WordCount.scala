@@ -14,7 +14,7 @@ object WordCount extends App{
     .getOrCreate()
 
   import sparkSession.implicits._
-  val data = sparkSession.read.text("Names.txt").as[String]
+  val data = sparkSession.read.text("WordCount.csv").as[String]
 
   val words = data.flatMap(value => value.split(","))
   val groupedWords = words.groupByKey(_.toLowerCase())
