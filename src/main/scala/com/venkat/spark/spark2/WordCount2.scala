@@ -30,12 +30,10 @@ object WordCount2{
       return
     }
 
-/*    if(!outPathExists){
-      println("Invalid output path")
-      return
-    }*/
+    if(outPathExists){
+      fs.delete(new Path(outputPath))
+    }
 
-    import sparkSession.implicits._
     val wc = sc.textFile(inputPath)
                 .flatMap(rec => rec.split(","))
                 .map(rec => (rec,1))
@@ -43,8 +41,8 @@ object WordCount2{
 
     wc.foreach(println)
 
-/*    wc.map(rec => rec.productIterator.mkString(("\t")))
-          .saveAsObjectFile(outputPath)*/
+    wc.map(rec => rec.productIterator.mkString(("\t")))
+          .saveAsObjectFile(outputPath)
 
 
   }
