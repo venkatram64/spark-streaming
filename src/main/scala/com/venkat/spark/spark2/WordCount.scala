@@ -1,15 +1,20 @@
 package com.venkat.spark.spark2
 
+import com.typesafe.config.ConfigFactory
+import org.apache.commons.configuration.tree.xpath.ConfigurationNodePointerFactory
 import org.apache.spark.sql.SparkSession
+
 
 /**
   * Created by VenkatramR on 7/21/2017.
   */
 object WordCount extends App{
 
+  val appConf = ConfigFactory.load()
+
   val sparkSession = SparkSession
     .builder
-    .master("local")
+    .master(appConf.getConfig("dev").getString("deploymentMaster"))
     .appName("WordCount")
     .getOrCreate()
 
