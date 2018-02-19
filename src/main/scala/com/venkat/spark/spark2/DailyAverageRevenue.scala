@@ -32,7 +32,7 @@ object DailyAverageRevenue {
     }
 
     if (outPathExists) {
-      fs.delete(new Path(outputPath))
+      fs.delete(new Path(outputPath),true)
     }
 
     val ordersRDD = sc.textFile(inputPath)
