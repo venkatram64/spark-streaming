@@ -61,8 +61,27 @@ object DailyAverageRevenue {
     //orderItems.filter(rec => (rec._1 == 55207)).foreach(println)
 
     val ordersJoin = orders.join(orderItems)
-    ordersJoin.foreach(rec => (println(rec._1 + " : " + rec._2._1 + " : " + rec._2._2)))
+    //ordersJoin.foreach(rec => (println(rec._1 + " : " + rec._2._1 + " : " + rec._2._2)))
 
+    val ordersJoinMap = ordersJoin.map(rec => (rec._2._1, rec._2._2))
+    //ordersJoinMap.foreach(rec => println(rec._1 + ": " + rec._2))
+
+    val revenuePerDay = ordersJoinMap.aggregateByKey((0.0,0))(
+      (acc, value) => (acc._1 + value, acc._2 + 1),//total orders per day
+      (total1, total2) => (total1._1 + total2._1, total1._2 + total2._2)
+    )
+    //revenuePerDay.foreach(rec => println(rec._1 +": " + rec._2._2 + ": " + rec._2._1))
+
+    //revenue average per day
+    val avgPerDay = revenuePerDay.map(rec => (rec._1,
+          BigDecimal(rec._2._1/rec._2._2).setScale(2, BigDecimal.RoundingMode.HALF_UP).toFloat))
+    val avgPerDaySortedByDate = avgPerDay.sortByKey(false)
+
+    avgPerDaySortedByDate.foreach(rec => println(rec._1 + ": " + rec._2))
+
+    avgPerDaySortedByDate
+        .map(rec => rec._1 +", " + rec._2)
+        .saveAsTextFile(outputPath)
   }
 
 }
