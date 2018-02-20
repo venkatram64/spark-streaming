@@ -31,7 +31,7 @@ object WordCount2{
     }
 
     if(outPathExists){
-      fs.delete(new Path(outputPath))
+      fs.delete(new Path(outputPath),true)
     }
 
     val wc = sc.textFile(inputPath)
@@ -41,8 +41,13 @@ object WordCount2{
 
     wc.foreach(println)
 
-    wc.map(rec => rec.productIterator.mkString(("\t")))
-          .saveAsObjectFile(outputPath)
+/*    wc.map(rec => rec.productIterator.mkString(("\t")))
+          .saveAsObjectFile(outputPath)*/
+
+    wc.map(rec => rec._1 + "\t" + rec._2)
+      .saveAsTextFile(outputPath)
+
+
 
 
   }

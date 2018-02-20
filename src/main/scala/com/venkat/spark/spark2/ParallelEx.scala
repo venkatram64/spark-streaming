@@ -23,7 +23,8 @@ object ParallelEx extends App{
   import sparkSession.implicits._
   val data2 = sparkSession.read.text("numberData.txt").as[String]
 
-  val total = data2.map(rec => rec.toInt).reduce((acc,value) => acc + value)
+  val total = data2.map(rec => rec.toInt)
+    .reduce((acc,value) => acc + value)
 
   println(total)
 

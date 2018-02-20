@@ -5,6 +5,55 @@ import org.apache.hadoop.fs.{FileSystem, Path}
 import org.apache.spark.sql._
 import org.apache.spark.sql.functions._
 //https://www.youtube.com/watch?v=-iLJQVbRe90&list=PLf0swTFhTI8pYx_X_fYpWkCfHozmMsyij&index=52
+/*
+vi build.sbt
+mkdir -p src/main/scala
+mkdir -p src/main/resources
+ls -altr
+sbt package
+
+find project -name "*"
+
+sbt eclipse
+
+ls -ltr sprark*
+tar xzf file.tgz
+x-> extraction
+z-> unzip
+f-> file
+
+ls -ltr | grep spark
+
+ln -s spark-1.6.2-bin-hadoop2.6 spark  (soft link)
+
+spark-shell (to run the spark)
+
+ls -altr
+sbt package
+sbt .classpath
+
+Spartk is distributed computing engine
+It works on many file systems - typically distributed ones
+It uses HDFS API's for reading files from file system
+Works seamlessly on HDFS, AWS S3 and Azure Blob etc
+
+to start the spark shell
+spark-shell --master yarn --conf spark.ui.port=45162
+
+cd ~;mkdir -p sparkDemo/scala/data; cd sparkDemo/scala/data
+
+sudo -u hdfs hadoop fs -mkdir /user/root; sudo -u hdfs hadoop fs -chown root /user/root
+
+hadoop fs -ls /user
+
+hadoop fs -mkdir -p /user/root/spark_demo/scala
+
+hadoop fs -put /root/spark_demo/scala/data /user/root/spark_demo/scala
+
+find /usr/htp -name "*spark*core*.jar"
+
+set -o vi   to see the history
+ */
 case class Orders(
   order_id: Int,
   order_date: String,
