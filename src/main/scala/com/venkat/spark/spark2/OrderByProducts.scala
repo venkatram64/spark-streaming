@@ -5,6 +5,7 @@ import org.apache.spark.sql.SparkSession
 import com.typesafe.config.ConfigFactory
 import org.apache.hadoop.fs.{FileSystem, Path}
 import org.apache.spark.sql.SparkSession
+//https://www.youtube.com/watch?v=2-d8WwdtlUI&list=PLf0swTFhTI8rDQXfH8afWtGgpOTnhebDx
 //https://www.youtube.com/watch?v=uXoFED4IBos
 object OrderByProducts {
 
@@ -57,18 +58,19 @@ object OrderByProducts {
     )
 
 
-    orderAggregate.take(10).foreach(println)
-    println("******with aggregate key*****")
+    //orderAggregate.take(10).foreach(println)
+    println("******with aggregate key max value for order id*****")
     //https://www.youtube.com/watch?v=2aoEaGhyCQw
 
-    val orderAggregate3 = orderItems.aggregateByKey((0.0, 0.0))(
-      (total, element) => (total._1 + element, if(element > total._1) element else total._1),
+    //(order_id, order_item_subtotal)
+    val orderAggregate3 = orderItems.aggregateByKey((0.0, 0.0f))(
+      (total, element) => (total._1 + element, if(element > total._2) element else total._2),
       (finalTotal, interTotal) => (finalTotal._1 + interTotal._1,
-        finalTotal._2 + interTotal._2)
+        if(finalTotal._2 > interTotal._2) finalTotal._2 else interTotal._2)
     )
+    //(order_id, (order_revenue, max_order_item_subtotal))
 
-
-    orderAggregate3.take(10).foreach(println)
+    orderAggregate3.sortByKey().take(10).foreach(println)
 
 
 
@@ -80,7 +82,7 @@ object OrderByProducts {
             total._2 + element._2));
 
 
-    orderAggregate2.take(10).foreach(println)
+    //orderAggregate2.take(10).foreach(println)
   }
 
 }
