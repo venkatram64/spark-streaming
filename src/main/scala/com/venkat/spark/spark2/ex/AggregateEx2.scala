@@ -2,7 +2,7 @@ package com.venkat.spark.spark2.ex
 
 import com.typesafe.config.ConfigFactory
 import org.apache.spark.sql.SparkSession
-
+//https://www.youtube.com/watch?v=CJFxQHljhA4&index=74&list=PLf0swTFhTI8rDQXfH8afWtGgpOTnhebDx
 object AggregateEx2 extends App{
 
   val appConf = ConfigFactory.load()
@@ -15,13 +15,12 @@ object AggregateEx2 extends App{
 
   val sc = sparkSession.sparkContext
 
-  val ordersRDD = sc.textFile("orders.txt")
   val orderItemsRDD = sc.textFile("order_items.txt")
 
   //aggregations - groupByKey (single threaded approach)
   //1. (1 to 1000) - sum(1 to 1000) => 1 = 2 + 3 + 1000
 
-  //agregations with out groupByKey => divide and concur
+  //agregations with out groupByKey => divide and conquer
   //1. (1 to 1000) - sum(1 to 25) sum(26 to 50) sum(51 to 75) ... sum(951 to 1000) => 1 = 2 + 3 + 1000
 
   //get revenue per order id, get data in descending by order item sub total, for each order it

@@ -1,8 +1,7 @@
 package com.venkat.spark.spark2.ex
 
 import com.typesafe.config.ConfigFactory
-import com.venkat.spark.spark2.ex.JoinEx.sc
-import com.venkat.spark.spark2.ex.LRJoin.sc
+
 import org.apache.spark.sql.SparkSession
 
 object AggregateEx extends App{
